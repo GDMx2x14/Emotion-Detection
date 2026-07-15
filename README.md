@@ -52,6 +52,6 @@ conda env create -f requirements_conda.txt
 ## Contributors
 
 This project was developed by a team of three:
-- [Giuseppe De Marco](https://github.com/GDMx2x14)
+- [Giuseppe De Marco](https://github.com/GDMx2x14) (some commits authored under the `GDM99` alias of this account)
 - [AndreaAlberti116](https://github.com/AndreaAlberti116)
 - [Nsivaa](https://github.com/Nsivaa)
