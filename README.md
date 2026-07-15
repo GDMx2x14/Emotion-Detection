@@ -1,20 +1,57 @@
-# HLT
+# Emotion Detection
 
-The dataset directory contains the unpreprocessed datasets of GoEmotions and TwitterData and their cleaned versions (including operations of GoEmotions_data_preparation.ipynb and Twitter_data_preparation.ipynb).
+A comparative study of classical machine learning, deep learning, and large language model
+approaches to emotion classification in text, evaluated on the **GoEmotions** and **Twitter**
+datasets.
 
-Each model is studied in a separate notebook, with the exception of random forest, that is studied in the same notebook as the decision tree.
-These notebooks save their best models in the checkpoint directory (that is provided as empty due to the size of the files).
+## Overview
 
-The directory lib contains python scripts that are used in the notebooks. The scripts contain functions to perform the grid search, load and preprocess datasets, build pytorch models, evaluate models and plot results.
+This project benchmarks a range of modeling strategies — from classical baselines to fine-tuned
+transformers to zero/few-shot LLM inference — on the task of multi-class emotion classification,
+and studies which words are most emotionally discriminative via a PMI-based ranking method.
 
-Under results directory, the predictions of llama3, word ranking scores and grid search data is stored. Running grid searches of notebooks will not fit any model since hyperparameters data is stored in this directory.
+## Approaches compared
 
-GoEmotions_data_exploration.ipynb and Twitter_data_exploration.ipynb are the notebooks that contain the data exploration of the datasets.
+- **Classical ML**: Naive Bayes, Decision Trees, Random Forest
+- **Deep learning**: custom PyTorch models
+- **Transformers**: BERT, RoBERTa, SocBERT (fine-tuned on GoEmotions)
+- **LLM few-shot inference**: Llama 3 predictions (zero/few-shot, no fine-tuning)
 
-GoEmotions_emotion_words.ipynb and Twitter_emotion_words.ipynb are the notebooks that contain the emotion words rankings according to a pmi based score.
+All models are evaluated on a shared held-out test split for a fair final comparison.
 
-model_comparison.ipynb is the notebook that contains the comparison of the final best models on the test set.
+## Repository structure
 
-To build an environment with all dependencies installed, requirements.txt and requirements_conda.txt are provided. The first one is for pip and the second one is for conda and they are equivalent.
+```
+dataset/      raw and cleaned GoEmotions + Twitter data (preparation notebooks included)
+lib/          shared Python modules: grid search, data loading/preprocessing,
+              PyTorch model building, evaluation, plotting
+results/      Llama 3 predictions, PMI word-ranking scores, saved grid-search results
+GoEmotions_*.ipynb   one notebook per model (Bayes, Decision Trees/Random Forest, BERT, RoBERTa, SocBERT)
+GoEmotions_data_exploration.ipynb / Twitter_data_exploration.ipynb   dataset exploration
+GoEmotions_emotion_words.ipynb / Twitter_emotion_words.ipynb         PMI emotion-word ranking
+model_comparison.ipynb   final model comparison on the held-out test set
+HLT_Project_Report.pdf   full write-up: methodology, experiments, and results
+```
 
-HLT_Project_Report.pdf contains the report of the analysis.
+## Methodology
+
+Each model family is developed and tuned in its own notebook via grid search over
+hyperparameters (results cached under `results/` to avoid re-running searches), with
+best checkpoints saved for later comparison. `model_comparison.ipynb` brings the best
+version of every model together on the same test set to produce the final comparison.
+Full metrics and discussion are in `HLT_Project_Report.pdf`.
+
+## Setup
+
+```bash
+pip install -r requirements.txt
+# or, with conda:
+conda env create -f requirements_conda.txt
+```
+
+## Contributors
+
+This project was developed by a team of three:
+- [Giuseppe De Marco](https://github.com/GDMx2x14)
+- [AndreaAlberti116](https://github.com/AndreaAlberti116)
+- [Nsivaa](https://github.com/Nsivaa)
